@@ -1,40 +1,42 @@
-// src/index.js (EJEMPLO)
+// src/index.js
 import express from 'express';
-import cors from 'cors'; // 🚨 IMPORTAR CORS
+import cors from 'cors';
 import 'dotenv/config';
-// ... importa tus routers (authRouter, productsRouter)
+
+// Importar tus routers
 import authRouter from './routes/auth.js';
 import productsRouter from './routes/products.js';
-
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 // 🚨 CONFIGURACIÓN DE CORS
-// Permite peticiones de tu frontend (http://localhost:5173) y cualquier otro origen
 const corsOptions = {
-    // ⚠️ Asegúrate de cambiar esto si tu frontend no corre en el 5173
-    origin: ['http://localhost:5173', 'https://backend-lienzo-de-vida.onrender.com'],
+    origin: [
+        'http://localhost:5173',               // para desarrollo local
+        'https://lienzo-de-vida.vercel.app'    // dominio del frontend en producción
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true, // Importante si usas cookies o sesiones, aunque aquí usamos JWT
+    credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-app.use(cors(corsOptions)); // 🚨 USAR CORS ANTES DE LAS RUTAS
+// Usar CORS antes de las rutas
+app.use(cors(corsOptions));
 
-app.use(express.json()); // Middleware para parsear JSON
-app.use(express.urlencoded({ extended: true })); // Middleware para datos de formularios
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas de API
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/products', productsRouter);
 
-// Ruta de prueba (opcional)
+// Ruta de prueba
 app.get('/api/v1/', (req, res) => {
     res.json({ message: 'Lienzo de Vida API running!' });
 });
 
-
+// Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor backend escuchando en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor backend escuchando en puerto ${PORT}`);
 });
