@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 4000;
 // Permite peticiones de tu frontend (http://localhost:5173) y cualquier otro origen
 const corsOptions = {
     // ⚠️ Asegúrate de cambiar esto si tu frontend no corre en el 5173
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: ['http://localhost:5173', 'https://backend-lienzo-de-vida.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true, // Importante si usas cookies o sesiones, aunque aquí usamos JWT
     allowedHeaders: ['Content-Type', 'Authorization'],
